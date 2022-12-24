@@ -1,5 +1,5 @@
 import feedparser
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -23,15 +23,16 @@ def cnn_news():
 @app.route('/<publication>')
 def get_news(publication="yahoo"):
     feed = feedparser.parse(RSS_FEEDS[publication])
-    first_article = feed['entries'][0]
-    return """<html>
-        <body>
-            <h1>News Headlines</h1> </br>
-            <b>{0}</b> 
-            <i>{1}</i> </br>
-            <p>{2}</p> </br>
-        </body>
-    </html>""".format(first_article.get('title'), first_article.get('published'), first_article.get('link'))
+    #first_article = feed['entries'][0]
+    return render_template("home.html", articles=feed['entries'])
+#    return """<html>
+#        <body>
+#            <h1>News Headlines</h1> </br>
+#            <b>{0}</b> 
+#            <i>{1}</i> </br>
+#            <p>{2}</p> </br>
+#        </body>
+#    </html>""".format(first_article.get('title'), first_article.get('published'), first_article.get('link'))
 
 if __name__ == "__main__":
     app.run(debug=True)
