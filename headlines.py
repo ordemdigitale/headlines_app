@@ -7,7 +7,7 @@ RSS_FEEDS = {'yahoo': 'https://www.yahoo.com/news/rss',
             'cnn': 'http://rss.cnn.com/rss/edition.rss'}
 #Y_FEED = "https://www.yahoo.com/news/rss"
 
-
+"""
 @app.route('/')
 @app.route('/yahoo')
 def yahoo_news():
@@ -17,9 +17,11 @@ def yahoo_news():
 @app.route('/cnn')
 def cnn_news():
     return get_news('cnn')
+"""
 
-
-def get_news(publication):
+@app.route('/')
+@app.route('/<publication>')
+def get_news(publication="yahoo"):
     feed = feedparser.parse(RSS_FEEDS[publication])
     first_article = feed['entries'][0]
     return """<html>
